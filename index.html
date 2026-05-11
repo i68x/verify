@@ -880,12 +880,23 @@ h1,h2,h3,h4,h5{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-s
      nie blokuje renderowania strony
      ══════════════════════════════════════════════════ -->
 <script>
+// Resetuj język do polskiego przy każdym odświeżeniu strony
+// (usuwa cookie googtrans zanim Google Translate zdąży je odczytać)
+(function resetLangOnLoad() {
+  // Sprawdź czy to świeże załadowanie (nie nawigacja przez historię)
+  var navType = performance && performance.getEntriesByType &&
+    performance.getEntriesByType('navigation')[0];
+  var isReload = navType && (navType.type === 'reload' || navType.type === 'navigate');
+  // Zawsze czyść cookie przy starcie — język wybierany tylko ręcznie
+  document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+  document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + location.hostname;
+})();
+
 // Inicjalizacja Google Translate (wywołanie przez nasz własny widget)
 function googleTranslateElementInit() {
   new google.translate.TranslateElement({
     pageLanguage: 'pl',
     autoDisplay: false,
-    // Nie wyświetlamy domyślnego widgetu Google
   }, 'google_translate_element');
 }
 </script>
@@ -980,24 +991,7 @@ document.getElementById('langBtn').addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeLangDropdown();
 });
 
-// Czytaj aktualny język z cookie
-(function() {
-  var match = document.cookie.match(/googtrans=\/pl\/([^;]+)/);
-  if (match) {
-    var lang = match[1];
-    // Znajdź flagę i kod dla tego języka
-    var opt = document.querySelector('[data-lang="' + lang + '"]');
-    if (opt) {
-      var flag = opt.querySelector('.lf').textContent;
-      var code = lang.toUpperCase().substring(0, 2);
-      document.getElementById('currentFlag').textContent = flag;
-      document.getElementById('currentLangCode').textContent = code;
-      document.querySelectorAll('#langDropdown .lang-option').forEach(function(el) {
-        el.classList.toggle('active', el.getAttribute('data-lang') === lang);
-      });
-    }
-  }
-})();
+// Język zawsze startuje jako polski (cookie wyczyszczone przy ładowaniu)
 
 // ═══════════════════════════════
 // MOBILE: pokaż przełącznik języka w hamburger nav
