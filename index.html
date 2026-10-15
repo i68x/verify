@@ -599,7 +599,7 @@ h1,h2,h3,h4,h5{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-s
 
         <div class="bike-card reveal-scale">
       <div class="bike-img-wrap">
-        <img src="img/duottsf26.webp" alt="Hulajnoga Apollo" width="800" height="600" loading="lazy" style="aspect-ratio:4/3;width:100%;height:auto">
+        <img src="img/apollo.webp" alt="Hulajnoga Apollo" width="800" height="600" loading="lazy" style="aspect-ratio:4/3;width:100%;height:auto">
       </div>
       <div class="bike-info">
         <div class="bike-tag">Hulajnoga Apollo</div>
@@ -610,7 +610,7 @@ h1,h2,h3,h4,h5{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-s
           <div class="bike-spec"><i class="fas fa-road"></i> Zasięg 80-90km (możliwe wynajęcie dodatkowej baterii)</div>
           <div class="bike-spec"><i class="fas fa-tachometer-alt"></i> Do 25+ km/h</div>
           <div class="bike-spec"><i class="fas fa-circle-dot"></i> Hamulce mechaniczne oraz regeneracyjne</div>
-          <div class="bike-spec"><i class="fas fa-ring"></i> Opony 26" x 4.0"</div>
+          <div class="bike-spec"><i class="fas fa-ring"></i> Opony 10"</div>
           <div class="bike-spec"><i class="fas fa-clock"></i> Ładowanie 6-10h</div>
           <div class="bike-spec"><i class="fas fa-lock"></i> Uchwyt na telefon </div>
         </div>
@@ -628,10 +628,10 @@ h1,h2,h3,h4,h5{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-s
 
              <div class="bike-card reverse reveal-scale">
       <div class="bike-img-wrap">
-        <img src="img/duottsf26.webp" alt="Eahora Romeo Ultra II" width="800" height="600" loading="lazy" style="aspect-ratio:4/3;width:100%;height:auto">
+        <img src="img/eahora.webp" alt="Eahora Romeo Ultra II" width="800" height="600" loading="lazy" style="aspect-ratio:4/3;width:100%;height:auto">
       </div>
       <div class="bike-info">
-        <div class="bike-tag">Potężny roower elektryczny Eahora</div>
+        <div class="bike-tag">Potężny rower elektryczny Eahora</div>
         <h3>Eahora Romeo Ultra II </h3>
         <div class="bike-specs">
           <div class="bike-spec"><i class="fas fa-bolt"></i> Dual Motor 2x3000W</div>
@@ -731,7 +731,7 @@ h1,h2,h3,h4,h5{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-s
       <i class="fas fa-star" style="color:var(--amber);font-size:1.4rem"></i>
       <span style="font-family:'Oswald',sans-serif;font-size:1.6rem;font-weight:700;color:var(--amber);margin-left:8px">5.0</span>
     </div>
-    <p style="color:var(--gray);margin-bottom:24px;font-size:1rem">15+ opinii na Google Maps</p>
+    <p style="color:var(--gray);margin-bottom:24px;font-size:1rem">40+ opinii na Google Maps</p>
     <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
       <a href="https://share.google/Eii12vF3jfM1W6lqk" target="_blank" rel="noopener" class="btn btn-primary" style="font-size:1.1rem;padding:16px 40px"><i class="fab fa-google" style="margin-right:8px"></i> Sprawdź opinie</a>
       <a href="https://search.google.com/local/writereview?placeid=ChIJTSxmlTxDFkcRp1J_Pnk1Ims" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:1.1rem;padding:16px 40px"><i class="fas fa-pen" style="margin-right:8px"></i> Napisz opinię</a>
@@ -775,9 +775,10 @@ h1,h2,h3,h4,h5{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-s
         <div class="calc-ebike-options show" id="ebikeOptions">
           <label style="font-family:'Barlow Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;font-size:0.85rem;color:var(--gray-light)">Wybierz model</label>
           <select id="ebikeModel" aria-label="Wybierz model roweru">
-            <option value="f26">Duotts F26 - 650 zł/mies.</option>
+            <option value="f26">Duotts F26 - 730 zł/mies.</option>
             <option value="c29">Bigfly C29 - 690 zł/mies.</option>
             <option value="lite">Lite Bike - 530 zł/mies.</option>
+            <option value="eahora">Eahora Romeo Ultra II - 1120 zł/mies.</option>
           </select>
           <label style="font-family:'Barlow Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;font-size:0.85rem;color:var(--gray-light)">Okres wynajmu</label>
           <select id="ebikeRental" aria-label="Okres wynajmu">
@@ -1187,13 +1188,13 @@ function calculate() {
   var model = document.getElementById('ebikeModel').value;
   var rental = document.getElementById('ebikeRental').value;
   var rate, cost = 0;
-  var prices = { f26: {day:70,week:189,month:650}, c29: {day:60,week:210,month:690}, lite: {day:50,week:160,month:530} };
+  var prices = { f26: {day:70,week:220,month:730}, c29: {day:60,week:210,month:690}, lite: {day:50,week:160,month:530} , eahora: {day:90,week:300,month:1120} , apollo: {day:50,week:250,month:750} };
   if (bikeType === 'ebike') {
-    rate = 40;
+    rate = 44;
     if (rental === 'month') cost = prices[model].month;
     else if (rental === 'week') cost = prices[model].week * W;
     else cost = prices[model].day * days * W;
-    cost *= 0.85;
+    cost *= 0.90; // 1 - 0.10 = 0.90 
   } else { rate = 20; }
   var gross = Math.round(hours * rate * days * W);
   var net = Math.round(gross - cost);
